@@ -1,0 +1,119 @@
+﻿@page "/crear-serie"
+@inject ISeriesService SeriesService
+@inject ISnackbar Snackbar
+@using System.Text.Json
+
+<div class="container">
+    <div class="mb-12">
+        <MudText Typo="Typo.h2" Class="fw-bold text-light mb-2">Formulario de actualización de serie</MudText>
+        <div class="border-bottom border-2 border-light" style="width: 180px;"></div>
+    </div>
+    <MudForm @ref="_form" Model="@_serieCreateDto" OnValidSubmit="CrearSerieAsync">
+        <div class="bg-light p-4 rounded-3 shadow-sm mb-4">
+            <div class="row g-3">
+                <div class="col-12 col-md-6">
+                    <MudTextField 
+                        Label="Titulo" 
+                        @bind-Value="@_serieCreateDto.title" 
+                        Variant="Variant.Outlined"
+                        Class="w-100"
+                        Required="true"
+                     />
+                </div>
+                <div class="col-12 col-md-6">
+                    <MudTextField 
+                        Label="Creador" 
+                        @bind-Value="@_serieCreateDto.creator" 
+                        Variant="Variant.Outlined"
+                        Class="w-100"
+                        Required="true" 
+                    />
+                </div>
+
+                <div class="col-12 col-md-6">
+                    <MudNumericField 
+                        Label="Rating" 
+                        @bind-Value="@_serieCreateDto.rating" 
+                        Variant="Variant.Outlined"
+                        Class="w-100"
+                        Required="true" />
+                </div>
+                <div class="col-12 col-md-6">
+                    <MudTextField 
+                        Label="Fecha de estreno" 
+                        @bind-Value="@_serieCreateDto.dates" 
+                        Variant="Variant.Outlined"
+                        Class="w-100"
+                        Required="true" 
+                     />
+                </div>
+                <div class="col-12 col-md-6">
+                    <MudTextField 
+                        Label="Imagen" 
+                        @bind-Value="@_serieCreateDto.image" 
+                        Variant="Variant.Outlined"
+                        Class="w-100"
+                        Required="true" 
+                     />
+                </div>
+                <div class="col-12 col-md-6">
+                    <MudTextField 
+                        Label="Plataforma" 
+                        @bind-Value="@_serieCreateDto.channel" 
+                        Variant="Variant.Outlined"
+                        Class="w-100"
+                        Required="true" 
+                     />
+                </div>
+            </div>
+        </div>
+        <div class="d-flex flex-column flex-md-row justify-content-center gap-3 mt-4">
+            <MudButton OnClick="CrearSerieAsync"
+                       Variant="Variant.Filled"
+                       Color="Color.Primary"
+                       Size="Size.Large"
+                       StartIcon="@Icons.Material.Filled.Save"
+                       Class="px-4">
+                Guardar Cambios
+            </MudButton>
+
+            <MudButton Variant="Variant.Filled"
+                       Color="Color.Dark"
+                       Size="Size.Medium"
+                       StartIcon="@Icons.Material.Filled.ArrowBackIos"
+                       Href=@($"/")>
+                Volver
+            </MudButton>
+        </div>
+    </MudForm>
+</div>
+
+@code {
+    private MudForm? _form;
+
+    private SerieCreateDto _serieCreateDto = new();
+    private bool _isLoading = false;
+
+    private async Task CrearSerieAsync()
+    {
+        _isLoading = true;
+        try
+        {
+            var response = await SeriesService.CreateSerieAsync(_serieCreateDto);
+
+            Console.WriteLine(JsonSerializer.Serialize(response));
+
+            Snackbar.Add("Serie creada correctamente", Severity.Success);
+            _serieCreateDto = new();
+            await _form!.ResetAsync();
+        }
+        catch (Exception ex)
+        {
+            Snackbar.Add($"Error al crear la serie: {ex.Message}", Severity.Error);
+        }
+        finally
+        {
+            _isLoading = false;
+        }
+    }
+}

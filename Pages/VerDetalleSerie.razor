@@ -1,0 +1,141 @@
+﻿@page "/ver-detalle/{_id}"
+@using System.Text.Json
+
+@inject ISeriesService SeriesService
+
+<div class="container mt-5">
+    @if (_serieDto != null)
+    {
+        <MudCard Class="p-4 bg-dark-subtle">
+            <div class="row align-items-start">
+
+                <div class="col-md-4">
+                    <MudCardMedia Image="@_serieDto.image"
+                                  Height="600"
+                                  Class="rounded-3 img-fluid w-100"
+                                  Style="object-fit: cover;" />
+                </div>
+
+                <div class="container col-md-8">
+                    <MudCardContent Class="p-4">
+                        <div class="mb-12">
+                            <MudText Typo="Typo.h2" Class="fw-bold text-dark mb-2">@_serieDto.title</MudText>
+                            <div class="border-bottom border-2 border-dark" style="width: 80px;"></div>
+                        </div>
+
+                        <div class="row g-3">
+                            <div class="col-12 col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <MudText Typo="Typo.subtitle1" Class="text-muted mb-1">Creador</MudText>
+                                        <MudText Typo="Typo.h6" Class="fw-semibold mb-0">@_serieDto.creator</MudText>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="d-flex align-items-center">
+                                    <div>
+                                        <MudText Typo="Typo.subtitle1" Class="text-muted mb-1">Rating</MudText>
+                                        <MudText Typo="Typo.h6" Class="fw-semibold mb-0">
+                                            <span class="badge bg-warning text-dark fs-6">@_serieDto.rating/10</span>
+                                        </MudText>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="d-flex align-items-center">
+                    
+                                    <div>
+                                        <MudText Typo="Typo.subtitle1" Class="text-muted mb-1">Plataforma</MudText>
+                                        <MudText Typo="Typo.h6" Class="fw-semibold mb-0">@_serieDto.channel</MudText>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                                <div class="col-12 col-md-6">
+                                    <div class="d-flex align-items-center">
+                                        <div>
+                                            <MudText Typo="Typo.subtitle1" Class="text-muted mb-1">Fechas de Emisión</MudText>
+                                            <MudText Typo="Typo.h6" Class="fw-semibold mb-0">@_serieDto.dates</MudText>
+                                        </div>
+                                    </div>
+                                </div>
+                      
+                        </div>
+                    </MudCardContent>
+                </div>
+            </div>
+
+            <div class="row mt-4">
+                <div class="col-12">
+                    <MudCardActions Class="d-flex justify-content-around">
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Primary"
+                                   Size="Size.Medium"
+                                   StartIcon="@Icons.Material.Filled.Search"
+                                   Href=@($"/ver-detalle/{_serieDto._id}")>
+                            Ver detalle
+                        </MudButton>
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Secondary"
+                                   Size="Size.Medium"
+                                   StartIcon="@Icons.Material.Filled.Update"
+                                   Href=@($"/actualizar-serie/{_serieDto._id}")>
+                            Actualizar
+                        </MudButton>
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Error"
+                                   Size="Size.Medium"
+                                   StartIcon="@Icons.Material.Filled.Delete"
+                                   OnClick="eliminarSerie">
+                            Eliminar
+                        </MudButton>
+                        <MudButton Variant="Variant.Filled"
+                                   Color="Color.Dark"
+                                   Size="Size.Medium"
+                                   StartIcon="@Icons.Material.Filled.ArrowBackIos"
+                                   Href=@($"/")>
+                            Volver
+                        </MudButton>
+                    </MudCardActions>
+                </div>
+            </div>
+        </MudCard>
+    }
+    else
+    {
+        <MudContainer Class="text-center py-16">
+            <MudIcon Icon="Icons.Material.Filled.Movie" Size="Size.Large" Color="Color.Primary" Class="mb-4" />
+            <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-2">No hay series disponibles</MudText>
+            <MudText Typo="Typo.body1" Color="Color.Secondary">Agrega algunas series para comenzar</MudText>
+        </MudContainer>
+    }
+</div>
+
+
+@code {
+
+    private SerieResponseDto _serieDto;
+
+    [Parameter]
+    public string _id { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _serieDto = await SeriesService.GetSerieByIdAsync(_id);
+    }
+
+    private async Task verDetalleSerie()
+    {
+        await SeriesService.GetSerieByIdAsync(_id);
+    }
+
+    private async Task eliminarSerie()
+    {
+        var response = await SeriesService.DeleteSerieAsync(_id);
+        Console.WriteLine(JsonSerializer.Serialize(response));
+    }
+}

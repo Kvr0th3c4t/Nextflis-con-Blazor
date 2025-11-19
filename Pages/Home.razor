@@ -1,0 +1,73 @@
+﻿@page "/"
+@inject ISeriesService SerieService
+
+<div class="container p-10 mb-5">
+    @if (_series.Any()){
+    <MudGrid Spacing="3" Justify="Justify.FlexStart">
+        @foreach (var serie in _series)
+        {
+            <MudItem xs="12" sm="6" md="4" lg="3">
+                <MudCard Class="h-100" Elevation="8" Hover="true">
+                    <MudCardMedia 
+                        Image="@serie.image" 
+                        Height="250" 
+                        Class="card-media"
+                        Style="background-size: cover; background-position: center;" />
+                
+                    <MudCardContent Class="py-4">
+                        <MudText Typo="Typo.h6" Class="text-truncate mb-2" Style="font-weight: 600; color: #1976d2;">
+                            @serie.title
+                        </MudText>
+                    
+                        <MudText Typo="Typo.body2" Class="mb-2" Style="color: #666;">
+                                <MudIcon Size="Size.Small" Class="mr-1" Icon="@Icons.Material.Filled.EmojiPeople" />
+                            @serie.creator
+                        </MudText>
+                    
+                        <MudText Typo="Typo.caption" Style="color: #888;">
+                                <MudIcon Size="Size.Small" Class="mr-1" Icon="@Icons.Material.Filled.Tv" />
+                            @serie.channel
+                        </MudText>
+                    </MudCardContent>
+
+                    <MudCardActions Class=" container justify-content-between px-4 pb-4" Justify="Justify.space-between">
+                            <MudButton Variant="Variant.Filled"
+                                       Color="Color.Primary"
+                                       Size="Size.Small"
+                                       StartIcon="@Icons.Material.Filled.Search"
+                                       Href=@($"/ver-detalle/{serie._id}")>
+                                Ver detalle
+                            </MudButton>
+                            <MudButton Variant="Variant.Filled"
+                                       Color="Color.Secondary"
+                                       Size="Size.Small"
+                                       StartIcon="@Icons.Material.Filled.Update"
+                                       Href=@($"/actualizar-serie/{serie._id}")>
+                                Actualizar
+                            </MudButton>
+                    </MudCardActions>
+                </MudCard>
+            </MudItem>
+        }
+    </MudGrid>
+    }else
+    {
+        <MudContainer Class="text-center py-16">
+            <MudIcon Icon="Icons.Material.Filled.Movie" Size="Size.Large" Color="Color.Primary" Class="mb-4" />
+            <MudText Typo="Typo.h5" Color="Color.Primary" Class="mb-2">No hay series disponibles</MudText>
+            <MudText Typo="Typo.body1" Color="Color.Secondary">Agrega algunas series para comenzar</MudText>
+        </MudContainer>
+    }
+</div>
+
+@code{
+    private List<SerieResponseDto> _series = new List<SerieResponseDto>();
+
+    protected override async Task OnInitializedAsync() => await Result();
+
+    private async Task Result()
+    {
+        var response = await SerieService.GetAllSeriesAsync();
+        _series = response.ToList();
+    }
+}
