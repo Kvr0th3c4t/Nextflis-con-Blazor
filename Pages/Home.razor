@@ -7,40 +7,39 @@
         @foreach (var serie in _series)
         {
             <MudItem xs="12" sm="6" md="4" lg="3">
-                <MudCard Class="h-100" Elevation="8" Hover="true">
+                <MudCard Class="CardMainContainer h-100 rounded-4" Elevation="8" Hover="true">
                     <MudCardMedia 
                         Image="@serie.image" 
-                        Height="250" 
-                        Class="card-media"
+                        Class="cardImage card-media object-fit-cover rounded-5 m-1"
                         Style="background-size: cover; background-position: center;" />
                 
                     <MudCardContent Class="py-4">
-                        <MudText Typo="Typo.h6" Class="text-truncate mb-2" Style="font-weight: 600; color: #1976d2;">
+                            <MudText Typo="Typo.h6" Class="CardTitle text-truncate mb-2">
                             @serie.title
                         </MudText>
-                    
-                        <MudText Typo="Typo.body2" Class="mb-2" Style="color: #666;">
-                                <MudIcon Size="Size.Small" Class="mr-1" Icon="@Icons.Material.Filled.EmojiPeople" />
+
+                            <MudText Typo="Typo.body2" Class="CardSubtitle mb-2">
+                                <MudIcon Size="Size.Small" Class=" mr-1" Icon="@Icons.Material.Filled.EmojiPeople" />
                             @serie.creator
                         </MudText>
-                    
-                        <MudText Typo="Typo.caption" Style="color: #888;">
+
+                            <MudText Typo="Typo.caption" Class="CardSubtitle">
                                 <MudIcon Size="Size.Small" Class="mr-1" Icon="@Icons.Material.Filled.Tv" />
                             @serie.channel
                         </MudText>
                     </MudCardContent>
 
-                    <MudCardActions Class=" container justify-content-between px-4 pb-4" Justify="Justify.space-between">
+                    <MudCardActions Class="container justify-content-around px-4 pb-4">
                             <MudButton Variant="Variant.Filled"
-                                       Color="Color.Primary"
-                                       Size="Size.Small"
+                                       Class="CardButton"
+                                       Size="Size.Medium"
                                        StartIcon="@Icons.Material.Filled.Search"
                                        Href=@($"/ver-detalle/{serie._id}")>
-                                Ver detalle
+                                Detalle
                             </MudButton>
                             <MudButton Variant="Variant.Filled"
-                                       Color="Color.Secondary"
-                                       Size="Size.Small"
+                                       Class="CardButton"
+                                       Size="Size.Medium"
                                        StartIcon="@Icons.Material.Filled.Update"
                                        Href=@($"/actualizar-serie/{serie._id}")>
                                 Actualizar

@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "Ñetflix",
   "resources": {
-    "hash": "sha256-QKq92c1ReSJn/I9l9GrXjlmbpSKL9DivT32EUVJgPU8=",
+    "hash": "sha256-eu4nS562Zydv06STn1vpGfzKUkXN9ocpExTEqoqPSIo=",
     "fingerprinting": {
       "Microsoft.AspNetCore.Authorization.is84zt9n9u.wasm": "Microsoft.AspNetCore.Authorization.wasm",
       "Microsoft.AspNetCore.Components.3zig3jhz80.wasm": "Microsoft.AspNetCore.Components.wasm",
@@ -210,8 +210,8 @@
       "icudt_CJK.tjcz0u77k5.dat": "icudt_CJK.dat",
       "icudt_EFIGS.tptq2av103.dat": "icudt_EFIGS.dat",
       "icudt_no_CJK.lfu7j35m59.dat": "icudt_no_CJK.dat",
-      "Ñetflix.34s2wlhmzh.wasm": "Ñetflix.wasm",
-      "Ñetflix.wla3869uuc.pdb": "Ñetflix.pdb"
+      "Ñetflix.nnhi8b5xyf.wasm": "Ñetflix.wasm",
+      "Ñetflix.grtnixyrbi.pdb": "Ñetflix.pdb"
     },
     "jsModuleNative": {
       "dotnet.native.noby4tlk4d.js": "sha256-p9eEzXhQIsI0a5bBJhfzW15iRafgplTxT8XrO5FiH9o="
@@ -430,10 +430,10 @@
       "WindowsBase.i7qip04bb5.wasm": "sha256-Lg5W8BM50Cpl1dgTrG9RQOrBRKOJq6H1t5sH3yf4KDU=",
       "mscorlib.ijjuvl21w4.wasm": "sha256-ku4DyQX7IfTdwPwDlrz9odvCs4mrgsJl0fNaqY56KOI=",
       "netstandard.jgp13znru0.wasm": "sha256-I7arRnyxWh5PItslQKjzLIG7EpohJACm7p/7K8eD0YA=",
-      "Ñetflix.34s2wlhmzh.wasm": "sha256-0x52e1HK4iNdDF/MXVu684J0n2+jhZIWUL+Vqkq+adk="
+      "Ñetflix.nnhi8b5xyf.wasm": "sha256-480OLOAvPwtPRbKBTjm/63qlYRgDXImUQBr4++pbI8w="
     },
     "pdb": {
-      "Ñetflix.wla3869uuc.pdb": "sha256-jLcPQ8kDapP0CpbYoKSjzr6p2q5NMfqfKzKA0bDcgJY="
+      "Ñetflix.grtnixyrbi.pdb": "sha256-bEyhf/z5QLY/6QP4xYpdqTk46imFP3bUybvVad3ijvc="
     }
   },
   "cacheBootResources": true,
